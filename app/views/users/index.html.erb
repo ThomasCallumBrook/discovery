@@ -4,3 +4,50 @@
     <h1>Explore,<br>more</h1>
   </div>
 </div>
+<div id="home-map"> </div>
+ <div id="sidecol"></div>
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<script>
+  var mymap = L.map('home-map', {
+    scrollWheelZoom: false
+  }).setView([0, 0], 1);
+  var polygon = L.polygon([
+      [90, -180],
+      [90, 180],
+      [-90, 180],
+      [-90, -180],
+  ]).addTo(mymap);
+  polygon.setStyle({
+    fillColor: '#000',
+    color: '#000',
+    fillOpacity: 1,
+  });
+  var myStyle = {
+    color: 'black',
+    stroke:false,
+  };
+
+  $('#sidecol').empty();
+  var myGeojSonLayerGroup = L.geoJson(world, {
+    onEachFeature: myOnEachFeature,
+    style: myStyle
+  }).addTo(mymap);
+
+  $(".cntrys").click(function() {
+   var item = $(this);
+   console.log("clicked on item " + item.data("countryName"));
+   myGeojSonLayerGroup.resetStyle(myGeojSonLayerGroup);
+   item.data("countryLayer").setStyle({
+     color: "red",
+     fillOpacity: 1,
+   });
+  });
+
+  function myOnEachFeature(feature, layer) {
+    var props = feature.properties;
+    var item = $('<div class="cntrys"><p class="title">' + props.name + '</a></p></div>');
+    item.data("countryLayer", layer);
+    item.data("countryName", props.name);
+    $('#sidecol').append(item);
+  }
+</script>
