@@ -18,12 +18,13 @@
       [-90, -180],
   ]).addTo(mymap);
   polygon.setStyle({
-    fillColor: '#000',
-    color: '#000',
+    fillColor: '#4286f4',
+    color: '#4286f4',
+    opacity: 1,
     fillOpacity: 1,
   });
   var myStyle = {
-    color: 'black',
+    color: '#4286f4',
     stroke:false,
   };
 
@@ -38,7 +39,7 @@
    console.log("clicked on item " + item.data("countryName"));
    myGeojSonLayerGroup.resetStyle(myGeojSonLayerGroup);
    item.data("countryLayer").setStyle({
-     color: "red",
+     color: "#88bb88",
      fillOpacity: 1,
    });
   });
