@@ -15,7 +15,33 @@
     text-transform: uppercase;
   }
 }
-#home-map{
-  width: 517px;
-  height: 517px;
+
+#discovery {
+  display: grid;
+  grid-template-columns: 1fr 515px 1fr;
+  grid-template-rows: auto;
+  grid-template-areas:
+  "fus roh dah";
+  h1{
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  #visited, #not-visited{
+    grid-area: "dah";
+    overflow: auto;
+    height: 495px;
+    padding: 10px;
+    line-height: 1.2rem;
+    min-width: 220px;
+  }
+  #home-map{
+    grid-area: "roh";
+    width: 515px;
+    height: 515px;
+  }
+  #visited{
+    grid-area: "fus";
+    text-align: right;
+  }
 }
