@@ -15,33 +15,109 @@
     text-transform: uppercase;
   }
 }
-
+.cntrys {
+  border-radius: 5px;
+  padding: 5px;
+  width:calc(100% - 40px);
+  margin: 20px;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto;
+  grid-column-gap: 20px;
+  grid-template-areas: "title btn";
+  align-items: center;
+  -moz-box-shadow: 0 0 3px #000;
+  -webkit-box-shadow: 0 0 3px #000;
+  box-shadow: 0 0 3px #000;
+  background-color: rgba(139, 174, 229, 0.8);
+  justify-items: start;
+  .title{
+    grid-area: title;
+  }
+  button {
+    grid-area: btn;
+    width: 100px;
+    justify-self: end;
+  }
+}
 #discovery {
+  background: image-url("sea.jpg") top left / cover no-repeat ;
+  overflow: hidden;
   display: grid;
   grid-template-columns: 1fr 515px 1fr;
   grid-template-rows: auto;
   grid-template-areas:
   "fus roh dah";
-  h1{
+  h1 {
+    padding-top: 10px;
     font-size: 2rem;
     text-align: center;
     margin-bottom: 10px;
   }
-  #visited, #not-visited{
-    grid-area: "dah";
+  #explore {
+    grid-area: 'dah';
+  }
+  #explored {
+    grid-area: 'fus';
+  }
+  #map {
+    grid-area: 'roh';
+    height: 557px;
+  }
+  #visited, #not-visited {
     overflow: auto;
     height: 495px;
     padding: 10px;
     line-height: 1.2rem;
     min-width: 220px;
+    font-size: 1.2rem;
   }
-  #home-map{
-    grid-area: "roh";
+  #home-map {
     width: 515px;
     height: 515px;
+    -moz-box-shadow: 0 0 3px #000;
+    -webkit-box-shadow: 0 0 3px #000;
+    box-shadow: 0 0 3px #000;
   }
-  #visited{
-    grid-area: "fus";
-    text-align: right;
+  #visited {
+    .cntrys {
+      button {
+        grid-area: title;
+        justify-self: start;
+      }
+      .title {
+        grid-area: btn;
+        justify-self: end;
+      }
+    }
+  }
+}
+
+
+@media only screen and (max-width: 950px) {
+  #discovery {
+    grid-template-columns: auto;
+    grid-template-rows: 1fr 567px 1fr;
+    grid-template-areas:
+    "fus" "roh" "dah";
+    #home-map{
+      margin: 0 auto;
+    }
+    #not-visited{
+      text-align: left;
+    }
+    #visited{
+      text-align: left;
+      .cntrys {
+        button {
+          grid-area: btn;
+          justify-self: end;
+        }
+        .title {
+          grid-area: title;
+          justify-self: start;
+        }
+      }
+    }
   }
 }
