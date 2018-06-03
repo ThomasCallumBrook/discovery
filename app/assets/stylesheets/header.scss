@@ -1,0 +1,67 @@
+/* header */
+#header {
+  display: grid;
+  grid-row: auto;
+  grid-template-columns: 120px auto 200px;
+  grid-template-areas:
+  "logo site links"
+  ;
+  position: relative;
+  height: 110px;
+  width: 100%;
+  border-bottom: 2px solid #000;
+  background:#333;
+}
+
+#header img {
+  position: relative;
+  display: inline-block;
+  grid-area: logo;
+  height: 100px;
+  margin: 0 10px;
+  justify-self: start;
+  align-self: center;
+}
+
+#header h1{
+  position: absolute;
+  grid-area: site;
+  justify-self: start;
+  align-self: center;
+  display: inline-block;
+  font-size: 3rem;
+  font-family: Ubuntu;
+  margin-left: 10px;
+  color: #ddd;
+}
+
+nav{
+  grid-area: links;
+  justify-self: end;
+  align-self: center;
+  position: relative;
+  display: inline;
+}
+
+.nav-links {
+  display: inline-flex;
+  text-decoration: none;
+  list-style: none;
+
+
+   a{
+    text-decoration: none;
+    padding: 0 10px;
+    text-transform: uppercase;
+    font-family: arial;
+    font-size: 1.5rem;
+    color: #fff;
+    &:hover{
+      color: orange;
+    }
+  }
+}
+#notice{
+  padding: 5px;
+  color: rgba(255,255,255,0.8);
+}
