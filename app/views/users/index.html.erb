@@ -43,7 +43,7 @@
 
   $(".cntrys").click(function() {
     var item = $(this);
-    console.log(item);
+    console.log(item.data().countryName);
     if (item.parent().attr('id') === 'visited') {
       $('#not-visited').append(item);
       myGeojSonLayerGroup.resetStyle(myGeojSonLayerGroup);
@@ -57,7 +57,7 @@
       item.data("countryLayer").setStyle({
         color: "#88bb88",
         fillOpacity: 1,
-      });
+      }).bindPopup(item.data().countryName);
       let neLat = item.data().countryLayer._bounds._northEast.lat;
       let swLat = item.data().countryLayer._bounds._southWest.lat;
       let neLon = item.data().countryLayer._bounds._northEast.lng;
