@@ -43,6 +43,7 @@
 #discovery {
   background: image-url("sea.jpg") top left / cover no-repeat ;
   overflow: hidden;
+  text-align: left;
   display: grid;
   grid-template-columns: 1fr 515px 1fr;
   grid-template-rows: auto;
@@ -71,6 +72,7 @@
     line-height: 1.2rem;
     min-width: 220px;
     font-size: 1.2rem;
+    text-align: left;
   }
   #home-map {
     width: 515px;
@@ -80,6 +82,7 @@
     box-shadow: 0 0 3px #000;
   }
   #visited {
+    text-align: right;
     .cntrys {
       button {
         grid-area: title;
