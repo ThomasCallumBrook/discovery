@@ -5,10 +5,22 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-users = User.create([
+users = [
   {email: 'a@a.com', name: 'Tom', password:'testing'},
   {email: 'e@a.com', name: 'Dave', password:'testing'},
   {email: 'b@a.com', name: 'Bill', password:'testing'},
   {email: 'c@a.com', name: 'Sarah', password:'testing'},
   {email: 'd@a.com', name: 'Jenny', password:'testing'}
-])
+]
+
+us = users.map do |user|
+    User.create!(user)
+end
+
+countries = [
+  {bounds: 'test', name: 'USATEST', user:us[0]}
+]
+
+countries.each do |country|
+  Country.create!(country)
+end
