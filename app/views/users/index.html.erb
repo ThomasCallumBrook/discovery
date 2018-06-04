@@ -41,10 +41,11 @@
     style: myStyle
   }).addTo(mymap);
 
-  $(".cntrys").click(function() {
-    var item = $(this);
+  $(".cntrys-btn").click(function() {
+    var item = $(this.parentNode);
     console.log(item.data().countryName);
     if (item.parent().attr('id') === 'visited') {
+      this.innerHTML = "Add";
       $('#not-visited').append(item);
       myGeojSonLayerGroup.resetStyle(myGeojSonLayerGroup);
       item.data("countryLayer").setStyle({
@@ -52,6 +53,7 @@
         fillOpacity: 1,
       });
     }else{
+      this.innerHTML = "Remove";
       $('#visited').append(item);
       myGeojSonLayerGroup.resetStyle(myGeojSonLayerGroup);
       item.data("countryLayer").setStyle({
@@ -81,7 +83,7 @@
     var item = $(`
       <div class="cntrys">
         <p class="title">${props.name}</p>
-        <button>Click Me!</button>
+        <button class="cntrys-btn">Add</button>
       </div>`);
     item.data("countryLayer", layer);
     item.data("countryName", props.name);
