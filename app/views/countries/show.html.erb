@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @country.name %>
+</p>
+
+<p>
+  <b>Bounds:</b>
+  <%= @country.bounds %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_country_path(@country.user, @country) %> |
+<%= link_to 'Back', user_countries_path(@country.user) %>

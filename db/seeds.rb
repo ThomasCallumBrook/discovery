@@ -18,7 +18,32 @@ us = users.map do |user|
 end
 
 countries = [
-  {bounds: 'test', name: 'USATEST', user:us[0]}
+  {bounds: 'test1', name: 'UKTEST', user:us[0]},
+  {bounds: 'test2', name: 'FRANCETEST', user:us[0]},
+  {bounds: 'test3', name: 'GERMANYTEST', user:us[0]},
+  {bounds: 'test4', name: 'BELGIUMTEST', user:us[0]},
+  {bounds: 'test5', name: 'SPAINTEST', user:us[0]},
+  {bounds: 'test6', name: 'PORTUGALEST', user:us[0]},
+  {bounds: 'test7', name: 'POLANDTEST', user:us[0]},
+  {bounds: 'test8', name: 'AZERBAIJANTEST', user:us[0]},
+  {bounds: 'test9', name: 'IRAQTEST', user:us[0]},
+  {bounds: 'test10', name: 'IRANTEST', user:us[0]},
+  {bounds: 'test11', name: 'IRELANDTEST', user:us[0]},
+  {bounds: 'test12', name: 'CANADATEST', user:us[0]},
+  {bounds: 'test13', name: 'USATEST', user:us[0]},
+  {bounds: 'test14', name: 'BRAZILTEST', user:us[0]},
+  {bounds: 'test15', name: 'CHILETEST', user:us[0]},
+  {bounds: 'test16', name: 'BOLIVATEST', user:us[0]},
+  {bounds: 'test17', name: 'ARGENTINATEST', user:us[0]},
+  {bounds: 'test18', name: 'PORTO RICOTEST', user:us[0]},
+  {bounds: 'test19', name: 'AUSTRALIA', user:us[0]},
+  {bounds: 'test20', name: 'AUSTRIA', user:us[0]},
+  {bounds: 'test21', name: 'UKRAINETEST', user:us[0]},
+  {bounds: 'test22', name: 'MARSHALLISLANDSTEST', user:us[0]},
+  {bounds: 'test23', name: 'EYGYPTTEST', user:us[0]},
+  {bounds: 'test24', name: 'SOMALIATEST', user:us[0]},
+  {bounds: 'test25', name: 'NIGERTEST', user:us[0]},
+
 ]
 
 countries.each do |country|
