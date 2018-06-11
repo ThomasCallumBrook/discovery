@@ -1,15 +1,53 @@
-<p id="notice"><%= notice %></p>
+<div id="countryView">
 
-<p>
-  <b>Name:</b>
-  <%= @country.name %>
-</p>
+  <div class="mapStuff">
+    <p id="notice"><%= notice %></p>
+    <h1 id="countryName"><%= @country.name %></h1>
+    <p class="lat"></p>
+    <p class="lon"></p>
+    <h2>Add a visited region on map click!</h2>
+    <h3>Add details below</h3><br>
+    <label>Radius of visited area (km):</label>
+    <input type=text class="rad"><br>
+    <label>Region note:</label>
+    <input type=text class="popupNote"><br>
+    <%= link_to "Edit #{@country.name}", edit_user_country_path(@country.user, @country) %> |
+    <%= link_to 'Back', user_countries_path(@country.user) %>
+  </div>
+  <div id="countryMap"></div>
 
-<p>
-  <b>Bounds:</b>
-  <%= @country.bounds %>
-</p>
 
+</div>
+<script type="text/javascript">
+  var lat = document.querySelector('.lat');
+  var lon = document.querySelector('.lon');
+  var rad = document.querySelector('.rad');
+  var circle = undefined;
+  let popupNote = document.querySelector('.popupNote')
+  var addCircle = function (event) {
+    circle = L.circle(event.latlng, {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: rad.value*1609.34,
+    stroke: false
+    }).addTo(mymap);
+    circle.bindPopup(popupNote.value);
+  }
+  var mymap = L.map('countryMap').setView([51.505, -0.115], 8);
+  L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+      maxZoom: 18,
+      id: 'mapbox.streets',
+      accessToken: 'pk.eyJ1IjoidGhvbWFzY2FsbHVtYnJvb2siLCJhIjoiY2pnNm9hOTUxMjlyNjJ3b2gybXl2OGpvNSJ9.6FSzBSK3H6063Afj38PSIQ'
+  }).addTo(mymap);
+  function onMapClick(event) {
+    lat.innerHTML = event.latlng.lat;
+    lon.innerHTML = event.latlng.lng;
+    addCircle(event);
+    alert("Added visited region");
+  }
 
-<%= link_to 'Edit', edit_user_country_path(@country.user, @country) %> |
-<%= link_to 'Back', user_countries_path(@country.user) %>
+  mymap.addEventListener('click', onMapClick);
+
+</script>

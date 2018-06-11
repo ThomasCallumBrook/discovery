@@ -32,3 +32,31 @@
     grid-area: "del";
   }
 }
+
+.lat, .lon{
+  display: none;
+}
+#countryView {
+  display:grid;
+  height: calc(100vh - 112px);
+  overflow: auto;
+  grid-template-columns: 100vw;
+  grid-template-rows: 50% 50%;
+  grid-template-areas: "Deets""Map";
+}
+.mapStuff{
+  grid-area: "Deets";
+  label,input {
+    text-align: center;
+  }
+}
+#countryMap{
+  grid-area: "Map";
+  height: 100%;
+  width: 50%;
+  margin: 10px auto;
+}
+#countryName{
+  font-size: 4rem;
+  text-align: center;
+}

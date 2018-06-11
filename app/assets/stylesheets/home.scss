@@ -21,9 +21,8 @@
   width:calc(100% - 40px);
   margin: 20px;
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 90% 10%;
   grid-template-rows: auto;
-  grid-column-gap: 20px;
   grid-template-areas: "title btn";
   align-items: center;
   -moz-box-shadow: 0 0 3px #000;
@@ -73,6 +72,17 @@
     min-width: 220px;
     font-size: 1.2rem;
     text-align: left;
+    .fa-save {
+      display:none;
+    }
+    .cntrys-btn {
+      grid-area: btn;
+      justify-self: end;
+      font-size: 2rem;
+      &:hover{
+        color: red;
+      }
+    }
   }
   #home-map {
     width: 515px;
@@ -84,13 +94,22 @@
   #visited {
     text-align: right;
     .cntrys {
-      button {
+      .cntrys-btn {
         grid-area: title;
         justify-self: start;
+
       }
       .title {
         grid-area: btn;
         justify-self: end;
+      }
+      .fa-save {
+        display:inline;
+        grid-area: title;
+        margin-left: 30px;
+        &:hover{
+          color:yellow;
+        }
       }
     }
   }
@@ -112,10 +131,14 @@
     #visited{
       text-align: left;
       .cntrys {
-        button {
+        .cntrys-btn {
           grid-area: btn;
           justify-self: end;
         }
+        .fa-save {
+          grid-area: btn;
+        }
+
         .title {
           grid-area: title;
           justify-self: start;

@@ -43,12 +43,14 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'simplecov', require: false
   gem 'selenium-webdriver'
+
 end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'pry-rails'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

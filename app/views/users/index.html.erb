@@ -53,13 +53,14 @@
         fillOpacity: 1,
       });
     }else{
-      this.innerHTML = "Remove";
+      this.innerHTML = "&times";
       $('#visited').append(item);
       myGeojSonLayerGroup.resetStyle(myGeojSonLayerGroup);
       item.data("countryLayer").setStyle({
         color: "#88bb88",
         fillOpacity: 1,
       }).bindPopup(item.data().countryName);
+      console.log(item.data().countryLayer._bounds);
       let neLat = item.data().countryLayer._bounds._northEast.lat;
       let swLat = item.data().countryLayer._bounds._southWest.lat;
       let neLon = item.data().countryLayer._bounds._northEast.lng;
@@ -83,10 +84,14 @@
     var item = $(`
       <div class="cntrys">
         <p class="title">${props.name}</p>
-        <button class="cntrys-btn">Add</button>
+        <i class="far fa-save"></i>
+        <p class="cntrys-btn">+</p>
       </div>`);
     item.data("countryLayer", layer);
     item.data("countryName", props.name);
     $('#not-visited').append(item);
   }
+  $(".fa-save").click(function() {
+    console.log(this.parentNode);
+  })
 </script>
