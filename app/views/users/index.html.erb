@@ -90,7 +90,6 @@
     var item = $(`
       <div class="cntrys">
         <p class="title">${props.name}</p>
-        <i class="far fa-save"></i>
       </div>`);
     item.data("countryLayer", layer);
     item.data("countryName", props.name);
@@ -105,6 +104,10 @@
     if (name){
       item.append(`<p class="cntrys-btn">&times</p>`)
       $('#visited').append($(item));
+      item.data("countryLayer").setStyle({
+        color: '#88bb88',
+        fillOpacity: 1,
+      }).bindPopup(props.name);
     }else{
       item.append(`<p class="cntrys-btn">+</p>`)
       $('#not-visited').append(item);
