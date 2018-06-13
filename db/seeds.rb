@@ -18,8 +18,8 @@ us = users.map do |user|
 end
 
 countries = [
-  {bounds: 'test1', name: 'UKTEST', user:us[0]},
-  {bounds: 'test2', name: 'FRANCETEST', user:us[0]},
+  {bounds: 'test1', name: 'Afghanistan', user:us[0]},
+  {bounds: 'test2', name: 'Angola', user:us[0]},
   {bounds: 'test3', name: 'GERMANYTEST', user:us[0]},
   {bounds: 'test4', name: 'BELGIUMTEST', user:us[0]},
   {bounds: 'test5', name: 'SPAINTEST', user:us[0]},
@@ -35,7 +35,7 @@ countries = [
   {bounds: 'test15', name: 'CHILETEST', user:us[0]},
   {bounds: 'test16', name: 'BOLIVATEST', user:us[0]},
   {bounds: 'test17', name: 'ARGENTINATEST', user:us[0]},
-  {bounds: 'test18', name: 'PORTO RICOTEST', user:us[0]},
+  {bounds: 'test18', name: 'PORTORICOTEST', user:us[0]},
   {bounds: 'test19', name: 'AUSTRALIA', user:us[0]},
   {bounds: 'test20', name: 'AUSTRIA', user:us[0]},
   {bounds: 'test21', name: 'UKRAINETEST', user:us[0]},

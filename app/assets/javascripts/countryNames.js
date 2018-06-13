@@ -1,3 +1,4 @@
+var countryNames = [
 {"name":"Afghanistan"},
 {"name":"Angola"},
 {"name":"Albania"},
@@ -178,3 +179,4 @@
 {"name":"South Africa"},
 {"name":"Zambia"},
 {"name":"Zimbabwe"},
+]
