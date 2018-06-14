@@ -38,8 +38,12 @@
 }
 #countryView {
   display:grid;
+  background: image-url("cork-board.jpg") top left / cover no-repeat ;
   height: calc(100vh - 112px);
-  overflow: auto;
+  width:100vw;
+  margin:0px;
+  padding: 0px;
+  overflow: hidden;
   grid-template-columns: 100vw;
   grid-template-rows: 50% 50%;
   grid-template-areas: "Deets""Map";
@@ -59,4 +63,22 @@
 #countryName{
   font-size: 4rem;
   text-align: center;
+}
+.details {
+  background-color: rgba(255,255,255,0.5);
+  border-radius: 10px;
+  width: 80%;
+  margin:0px auto;
+  padding:20px;
+  h2{
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  h3 {
+    font-size: 1.3rem;
+  }
+  input{
+    position: relative;
+    left: 25%;
+  }
 }

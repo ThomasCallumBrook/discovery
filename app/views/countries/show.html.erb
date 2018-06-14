@@ -3,16 +3,16 @@
   <div class="mapStuff">
     <p id="notice"><%= notice %></p>
     <h1 id="countryName"><%= @country.name %></h1>
-    <p class="lat"></p>
-    <p class="lon"></p>
-    <h2>Add a visited region on map click!</h2>
-    <h3>Add details below</h3><br>
-    <label>Radius of visited area (km):</label>
-    <input type=text class="rad"><br>
-    <label>Region note:</label>
-    <input type=text class="popupNote"><br>
-    <%= link_to "Edit #{@country.name}", edit_user_country_path(@country.user, @country) %> |
-    <%= link_to 'Back', user_countries_path(@country.user) %>
+    <div class="details">
+      <p class="lat"></p>
+      <p class="lon"></p>
+      <h2>Add a visited region on map click!</h2>
+      <h3>Add details below:</h3><br>
+      <label>Radius of visited area (km):</label>
+      <input type=text class="rad"><br>
+      <label>Region note:</label>
+      <input type=text class="popupNote"><br>
+    </div>
   </div>
   <div id="countryMap"></div>
 
