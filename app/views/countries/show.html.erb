@@ -1,4 +1,5 @@
 <div id="countryView">
+  <div id="user" data-country= <%=@country.bounds%> </div>
 
   <div class="mapStuff">
     <p id="notice"><%= notice %></p>
@@ -8,22 +9,32 @@
       <p class="lon"></p>
       <h2>Add a visited region on map click!</h2>
       <h3>Add details below:</h3><br>
-      <label>Radius of visited area (km):</label>
-      <input type=text class="rad"><br>
-      <label>Region note:</label>
-      <input type=text class="popupNote"><br>
+      <div class="deet-field">
+        <label>Radius of visited area (km):</label>
+        <input type=text class="rad"><br>
+      </div>
+      <div class="deet-field">
+        <label>Region note:</label>
+        <input type=text class="popupNote"><br>
+      </div>
     </div>
   </div>
   <div id="countryMap"></div>
 
 
 </div>
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <script type="text/javascript">
   var lat = document.querySelector('.lat');
   var lon = document.querySelector('.lon');
   var rad = document.querySelector('.rad');
   var circle = undefined;
   let popupNote = document.querySelector('.popupNote')
+  let user =$('#user').data().country
+  let coords = user.split(',');
+  console.log(coords[0]);
+  console.log(coords[1]);
+
   var addCircle = function (event) {
     circle = L.circle(event.latlng, {
     color: 'red',
@@ -34,13 +45,8 @@
     }).addTo(mymap);
     circle.bindPopup(popupNote.value);
   }
-  var mymap = L.map('countryMap').setView([51.505, -0.115], 8);
-  L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-      maxZoom: 18,
-      id: 'mapbox.streets',
-      accessToken: 'pk.eyJ1IjoidGhvbWFzY2FsbHVtYnJvb2siLCJhIjoiY2pnNm9hOTUxMjlyNjJ3b2gybXl2OGpvNSJ9.6FSzBSK3H6063Afj38PSIQ'
-  }).addTo(mymap);
+  var mymap = L.map('countryMap').setView([coords[0],coords[1]], 0);
+  var layer = new L.StamenTileLayer("toner").addTo(mymap);
   function onMapClick(event) {
     lat.innerHTML = event.latlng.lat;
     lon.innerHTML = event.latlng.lng;
@@ -49,5 +55,5 @@
   }
 
   mymap.addEventListener('click', onMapClick);
-
+  console.log(user)
 </script>

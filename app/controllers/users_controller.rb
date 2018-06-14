@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-
+ before_action :require_login, only: [:index]
   def index
     @users = User.all
     @user = current_user.to_json
