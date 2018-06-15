@@ -39,23 +39,21 @@
 #countryView {
   display:grid;
   background: image-url("cork-board.jpg") top left / cover no-repeat ;
-  height: calc(100vh - 112px);
-  width:100vw;
   margin:0px;
   padding: 0px;
-  overflow: hidden;
+  overflow-x: hidden;
   grid-template-columns: 100vw;
-  grid-template-rows: 50% 50%;
-  grid-template-areas: "Deets""Map";
+  grid-template-rows: auto 100vh auto;
+  grid-template-areas: "Deets""Map""Blogs";
 }
 .mapStuff{
-  grid-area: "Deets";
+  grid-area: Deets;
   label,input {
     text-align: center;
   }
 }
 #countryMap{
-  grid-area: "Map";
+  grid-area: Map;
   height: 100%;
   width: 50%;
   margin: 10px auto;
@@ -78,4 +76,46 @@
     font-size: 1.3rem;
   }
 
+}
+.blogs {
+  grid-area: Blogs;
+  margin:20px auto;
+  width: 90%;
+  background-color: rgba(50,50,50,0.9);
+  color: #fff;
+  padding: 5px;
+  border-radius: 10px;
+  h2{
+    font-size: 1.75rem;
+    margin-left: 20px;
+    margin-top: 10px;
+  }
+  textarea{
+    width: calc(100% - 20px);
+    margin-top: 15px;
+    min-height: 200px;
+    padding: 10px;
+  }
+  .blog{
+    width:90%;
+    background-color: rgba(100,100,100,0.9);
+    margin: 10px auto;
+    padding: 15px;
+    h3 {
+      margin-bottom: 5px;
+      text-align: center;
+      font-style: italic;
+      font-size: 1.5rem;
+    }
+    .save{
+      text-align: center;
+      font-size: 2rem;
+      margin:20px;
+      i {
+        &:hover {
+          color: #0c0;
+        }
+      }
+    }
+  }
 }

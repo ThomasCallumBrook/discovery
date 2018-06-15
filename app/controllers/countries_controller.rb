@@ -9,6 +9,7 @@ class CountriesController < ApplicationController
 
   # GET users/1/countries/1
   def show
+    @blogs = @country.blogs
   end
 
   # GET users/1/countries/new

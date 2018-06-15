@@ -1,5 +1,5 @@
 <div id="countryView">
-  <div id="user" data-country= <%=@country.bounds%> </div>
+  <div id="user" data-country=<%=@country.bounds%>></div>
 
   <div class="mapStuff">
     <p id="notice"><%= notice %></p>
@@ -20,7 +20,27 @@
     </div>
   </div>
   <div id="countryMap"></div>
+  <div class="blogs">
+    <h2>New Blog Post For <%=@country.name%>:</h2>
+    <div class="deet-field blog">
+      <label>Blog Title:</label>
+      <input type=text class="rad">
 
+    </div>
+    <div class="deet-field blog">
+      <label>Blog Post:</label>
+      <textarea></textarea>
+      <p class="save"><i class="far fa-save"></i></p>
+    </div>
+
+    <h2>Previous Blog Posts From <%=@country.name%>:</h2>
+  <% @blogs.each do |blog| %>
+    <div class="blog">
+      <h3><%=blog.title%></h3>
+      <p><%=blog.post%><p>
+    </div>
+  <%end%>
+</div>
 
 </div>
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
