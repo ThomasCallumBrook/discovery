@@ -1,0 +1,11 @@
+<div id="countryList">
+  <h1>Your visited countries</h1>
+  <% @countries.each do |country| %>
+    <div class="country-list">
+      <p class="country-name"><%= country.name %></p>
+      <p class="country-bounds"><%= country.bounds %></p>
+      <%= button_to 'Show', [country.user, country], method: 'get', class: "country-show"%>
+      <%= button_to 'Destroy', [country.user, country], :confirm => 'Are you sure?', :method => :delete, class: "country-del" %>
+    </div>
+  <% end %>
+</div>

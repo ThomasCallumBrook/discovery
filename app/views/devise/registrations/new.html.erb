@@ -13,6 +13,12 @@
         </div>
 
         <div class="field">
+          <%= f.label :name %><br />
+          <%= f.text_field :name, autocomplete: "off",
+          placeholder: "Your Name" %>
+        </div>
+
+        <div class="field">
           <%= f.label :password %>
           <%= f.password_field :password, autocomplete: "off",
             placeholder: "Six characters minimum"%>

@@ -1,0 +1,79 @@
+<div id="countryView">
+  <div id="user" data-country=<%=@country.bounds%>></div>
+
+  <div class="mapStuff">
+    <p id="notice"><%= notice %></p>
+    <h1 id="countryName"><%= @country.name %></h1>
+    <div class="details">
+      <p class="lat"></p>
+      <p class="lon"></p>
+      <h2>Add a visited region on map click!</h2>
+      <h3>Add details below:</h3><br>
+      <div class="deet-field">
+        <label>Radius of visited area (km):</label>
+        <input type=text class="rad"><br>
+      </div>
+      <div class="deet-field">
+        <label>Region note:</label>
+        <input type=text class="popupNote"><br>
+      </div>
+    </div>
+  </div>
+  <div id="countryMap"></div>
+  <div class="blogs">
+    <h2>New Blog Post For <%=@country.name%>:</h2>
+    <div class="deet-field blog">
+      <label>Blog Title:</label>
+      <input type=text class="rad">
+
+    </div>
+    <div class="deet-field blog">
+      <label>Blog Post:</label>
+      <textarea></textarea>
+      <p class="save"><i class="far fa-save"></i></p>
+    </div>
+
+    <h2>Previous Blog Posts From <%=@country.name%>:</h2>
+  <% @blogs.each do |blog| %>
+    <div class="blog">
+      <h3><%=blog.title%></h3>
+      <p><%=blog.post%><p>
+    </div>
+  <%end%>
+</div>
+
+</div>
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<script type="text/javascript">
+  var lat = document.querySelector('.lat');
+  var lon = document.querySelector('.lon');
+  var rad = document.querySelector('.rad');
+  var circle = undefined;
+  let popupNote = document.querySelector('.popupNote')
+  let user =$('#user').data().country
+  let coords = user.split(',');
+  console.log(coords[0]);
+  console.log(coords[1]);
+
+  var addCircle = function (event) {
+    circle = L.circle(event.latlng, {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: rad.value*1609.34,
+    stroke: false
+    }).addTo(mymap);
+    circle.bindPopup(popupNote.value);
+  }
+  var mymap = L.map('countryMap').setView([coords[0],coords[1]], 0);
+  var layer = new L.StamenTileLayer("toner").addTo(mymap);
+  function onMapClick(event) {
+    lat.innerHTML = event.latlng.lat;
+    lon.innerHTML = event.latlng.lng;
+    addCircle(event);
+    alert("Added visited region");
+  }
+
+  mymap.addEventListener('click', onMapClick);
+  console.log(user)
+</script>

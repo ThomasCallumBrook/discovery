@@ -1,3 +1,9 @@
+<% if current_user%>
+  <div id="user" data-user=<%= @user %> data-countries= <%=@countries%> data-test=<%=@test-%> data-test2=<%=@test2-%> >
+  </div>
+<%end%>
+
+
 <div class="hero">
   <p id="notice"><%= notice %></p>
   <div class="hero-content">
@@ -7,7 +13,7 @@
 <div id="discovery">
   <div id="explored"><h1 class="explored-t">Explored</h1><div id="visited"></div></div>
   <div id="map"> <h1 class="map-t">Your World to Discover</h1><div id="home-map"></div></div>
-  <div id="explore"><h1 class="unexplored-t">Unexplored<h1><div id="not-visited"></div></div>
+  <div id="explore"><h1 class="unexplored-t">Unexplored</h1><div id="not-visited"></div></div>
 </div>
 
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -41,23 +47,28 @@
     style: myStyle
   }).addTo(mymap);
 
-  $(".cntrys").click(function() {
-    var item = $(this);
-    console.log(item.data().countryName);
+  $(".cntrys-btn").click(function() {
+    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    var item = $(this.parentNode);
+    console.log(item.data().countryID);
     if (item.parent().attr('id') === 'visited') {
+      this.innerHTML = "+";
       $('#not-visited').append(item);
       myGeojSonLayerGroup.resetStyle(myGeojSonLayerGroup);
       item.data("countryLayer").setStyle({
         color: '#4286f4',
         fillOpacity: 1,
       });
+      fetch(`/users/${item.data().user}/countries/${item.data().countryID}.json`, {
+        method: 'DELETE',
+        credentials: 'include',
+        headers: {
+          'X-CSRF-Token': token,
+        },
+      })
     }else{
+      this.innerHTML = "&times";
       $('#visited').append(item);
-      myGeojSonLayerGroup.resetStyle(myGeojSonLayerGroup);
-      item.data("countryLayer").setStyle({
-        color: "#88bb88",
-        fillOpacity: 1,
-      }).bindPopup(item.data().countryName);
       let neLat = item.data().countryLayer._bounds._northEast.lat;
       let swLat = item.data().countryLayer._bounds._southWest.lat;
       let neLon = item.data().countryLayer._bounds._northEast.lng;
@@ -73,18 +84,71 @@
       }else {
         mymap.setView([lat, lon], 4);
       }
+      let data = {
+        name: item.data().countryName,
+        user: item.data().user,
+        bounds:`${lat},${lon}`,
+      }
+      fetch(`/users/${item.data().user}/countries.json`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': token,
+        },
+        body: JSON.stringify(data)
+      }).then(
+        fetch(`/users/${item.data().user}/countries.json`)
+        .then(response => response.json())
+        .then(json => item.data("countryID", json.id))
+        .then(finish => {
+          console.log(item.data().countryID);
+          myGeojSonLayerGroup.resetStyle(myGeojSonLayerGroup);
+          item.data("countryLayer").setStyle({
+            color: "#88bb88",
+            fillOpacity: 1,
+          }).bindPopup(`<a href="/users/${item.data().user}/countries/${item.data().countryID}">${item.data().countryName}</a>`);
+        })
+      );
+
     }
   });
 
   function myOnEachFeature(feature, layer) {
+    let user =$('#user').data().user.id;
+    let countries = $('#user').data().countries;
+    let bounds = $('#user').data().countries.bounds;
     var props = feature.properties;
     var item = $(`
       <div class="cntrys">
         <p class="title">${props.name}</p>
-        <button>Click Me!</button>
       </div>`);
+    console.log("pass");
     item.data("countryLayer", layer);
     item.data("countryName", props.name);
-    $('#not-visited').append(item);
+    item.data("user", user);
+    let  id = false;
+    for(let i = 0; i < countries.length; i++) {
+      if(countries[i].name === props.name){
+        id = countries[i].id;
+        console.log(countries[i].id)
+        break
+      }
+    }
+    if (id || id === 0){
+      item.data("countryID", id);
+      let url = `<a href="/users/${item.data().user}/countries/${item.data().countryID}">${props.name}</a>`;
+      console.log(url);
+      item.append(`<p class="cntrys-btn">&times</p>`)
+      $('#visited').append($(item));
+      item.data("countryLayer").setStyle({
+        color: '#88bb88',
+        fillOpacity: 1,
+      }).bindPopup(url);
+
+    }else{
+      item.append(`<p class="cntrys-btn">+</p>`)
+      $('#not-visited').append(item);
+    }
   }
 </script>

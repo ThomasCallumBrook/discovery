@@ -10,6 +10,10 @@ require 'capybara/rails'
 require 'support/capybara'
 require 'capybara/rspec'
 
+RSpec.configure do |config|
+  config.include Devise::Test::ControllerHelpers, type: :controller
+end
+
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec
