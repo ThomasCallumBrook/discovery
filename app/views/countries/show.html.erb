@@ -41,8 +41,40 @@
     </div>
   <%end%>
 </div>
+<div class="gallery-data">
+  <%= form_for([@country.user, @country]) do |f| %>
+    <% if current_user.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(current_user.errors.count, "error") %> prohibited this pet from being saved:</h2>
 
+        <ul>
+        <% current_user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+      <h2>Select files to add to your <%= @country.name %> gallery</h2>
+      <div class="field">
+        <%= f.label :images %><br>
+          <%= f.file_field :images, multiple: true %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Update", class:"btn form-btn" %>
+      </div>
+      <%= link_to "Back", :back %>
+
+
+
+  <% end %>
+  </div>
+  <p><%= @country.images %></p>
 </div>
+
+
+
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <script type="text/javascript">
   var lat = document.querySelector('.lat');
