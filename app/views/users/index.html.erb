@@ -42,8 +42,8 @@
     stroke:false,
   };
 
-  var myGeojSonLayerGroup = L.geoJson(world, {
-    onEachFeature: myOnEachFeature,
+  var countryLayers = L.geoJson(world, {
+    onEachFeature: countryAssignment,
     style: myStyle
   }).addTo(mymap);
 
@@ -54,7 +54,7 @@
     if (item.parent().attr('id') === 'visited') {
       this.innerHTML = "+";
       $('#not-visited').append(item);
-      myGeojSonLayerGroup.resetStyle(myGeojSonLayerGroup);
+      countryLayers.resetStyle(countryLayers);
       item.data("countryLayer").setStyle({
         color: '#4286f4',
         fillOpacity: 1,
@@ -103,9 +103,9 @@
         .then(json => item.data("countryID", json.id))
         .then(finish => {
           console.log(item.data().countryID);
-          myGeojSonLayerGroup.resetStyle(myGeojSonLayerGroup);
+          countryLayers.resetStyle(countryLayers);
           item.data("countryLayer").setStyle({
-            color: "#88bb88",
+            color: "#ff0000",
             fillOpacity: 1,
           }).bindPopup(`<a href="/users/${item.data().user}/countries/${item.data().countryID}">${item.data().countryName}</a>`);
         })
@@ -114,7 +114,7 @@
     }
   });
 
-  function myOnEachFeature(feature, layer) {
+  function countryAssignment(feature, layer) {
     let user =$('#user').data().user.id;
     let countries = $('#user').data().countries;
     let bounds = $('#user').data().countries.bounds;
