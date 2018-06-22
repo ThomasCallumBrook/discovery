@@ -1,7 +1,6 @@
 class CountriesController < ApplicationController
   before_action :set_countries
   before_action :set_country, only: [:show, :edit, :update, :destroy]
-
   # GET users/1/countries
   def index
     @countries = @user.countries
@@ -62,4 +61,6 @@ class CountriesController < ApplicationController
     def country_params
       params.require(:country).permit(:name, :bounds)
     end
+
+
 end
