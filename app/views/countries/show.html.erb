@@ -76,7 +76,6 @@
 
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <script type="text/javascript">
-  let bounds = new L.LatLngBounds(new L.LatLng(90, -180), new L.LatLng(-80, 180));
   let lat = document.querySelector('.lat');
   let lon = document.querySelector('.lon');
   let rad = document.querySelector('.rad');
@@ -99,10 +98,11 @@
   }
   let mymap = L.map('countryMap', {
       minZoom: 1,
-      maxBounds: bounds,
-      maxBoundsViscosity: 2.0
+      noWrap: true
   }).setView([coords[0],coords[1]], 0);
-  let layer = new L.StamenTileLayer("toner").addTo(mymap);
+  let layer = new L.StamenTileLayer("toner",{
+    noWrap: true
+  }).addTo(mymap);
   function onMapClick(event) {
     lat.innerHTML = event.latlng.lat;
     lon.innerHTML = event.latlng.lng;
