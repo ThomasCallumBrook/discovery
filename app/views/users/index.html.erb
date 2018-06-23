@@ -25,21 +25,11 @@
     maxBounds: bounds,
     maxBoundsViscosity: 1.0
   }).setView([0, 0], 1);
-  var polygon = L.polygon([
-      [90, -180],
-      [90, 180],
-      [-90, 180],
-      [-90, -180],
-  ]).addTo(mymap);
-  polygon.setStyle({
-    fillColor: '#4286f4',
-    color: '#4286f4',
-    opacity: 1,
-    fillOpacity: 1,
-  });
+
   var myStyle = {
     color: '#4286f4',
     stroke:false,
+    fillOpacity:0
   };
 
   var countryLayers = L.geoJson(world, {
@@ -57,7 +47,7 @@
       countryLayers.resetStyle(countryLayers);
       item.data("countryLayer").setStyle({
         color: '#4286f4',
-        fillOpacity: 1,
+        fillOpacity: 0,
       });
       fetch(`/users/${item.data().user}/countries/${item.data().countryID}.json`, {
         method: 'DELETE',
@@ -105,7 +95,7 @@
           console.log(item.data().countryID);
           countryLayers.resetStyle(countryLayers);
           item.data("countryLayer").setStyle({
-            color: "#ff0000",
+            color: "#666",
             fillOpacity: 1,
           }).bindPopup(`<a href="/users/${item.data().user}/countries/${item.data().countryID}">${item.data().countryName}</a>`);
         })
@@ -143,7 +133,7 @@
       item.append(`<p class="cntrys-btn">&times</p>`)
       $('#visited').append($(item));
       item.data("countryLayer").setStyle({
-        color: '#88bb88',
+        color: '#fff',
         fillOpacity: 1,
       }).bindPopup(url);
 

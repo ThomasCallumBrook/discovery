@@ -3,7 +3,7 @@
 
   <div class="mapStuff">
     <p id="notice"><%= notice %></p>
-    <h1 id="countryName"><%= @country.name %></h1>
+    <h2 id="countryName"><%= @country.name %></h2>
     <div class="details">
       <p class="lat"></p>
       <p class="lon"></p>
@@ -37,60 +37,57 @@
   <% @blogs.each do |blog| %>
     <div class="blog">
       <h3><%=blog.title%></h3>
+      <p> <%= blog.created_at.strftime("%d %B %Y:") %> </p>
       <p><%=blog.post%><p>
     </div>
   <%end%>
 </div>
-<div class="gallery-data">
-  <%= form_for([@country.user, @country]) do |f| %>
-    <% if @country.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@country.errors.count, "error") %> prohibited this image from being saved:</h2>
 
-        <ul>
-        <% @country.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+  <div id="gallery">
+    <div class="gallery-data">
+      <%= form_for([@country.user, @country]) do |f| %>
+        <% if @country.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@country.errors.count, "error") %> prohibited this image from being saved:</h2>
+            <ul>
+              <% @country.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
-        </ul>
+        <h2>Select files to add to your <%= @country.name %> gallery:</h2>
+        <div class="field">
+            <%= f.file_field :images, multiple: true %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit "Add images", class:"btn form-btn" %>
+        </div>
+      <% end %>
       </div>
+    <% @country.images.each do |pic| %>
+      <%= image_tag(pic.url, :class => "country-images") %>
     <% end %>
-
-      <h2>Select files to add to your <%= @country.name %> gallery</h2>
-      <div class="field">
-        <%= f.label :images %><br>
-          <%= f.file_field :images, multiple: true %>
-      </div>
-
-      <div class="actions">
-        <%= f.submit "Add images", class:"btn form-btn" %>
-      </div>
-      <%= link_to "Back", :back %>
-
-
-
-  <% end %>
   </div>
-  <p><%= @country.images %></p>
-  <% @country.images.each do |pic| %>
-    <%= image_tag(pic.url, :class => "country-images") %>
-  <% end %>
 </div>
 
 
 
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <script type="text/javascript">
-  var lat = document.querySelector('.lat');
-  var lon = document.querySelector('.lon');
-  var rad = document.querySelector('.rad');
-  var circle = undefined;
+  let bounds = new L.LatLngBounds(new L.LatLng(90, -180), new L.LatLng(-80, 180));
+  let lat = document.querySelector('.lat');
+  let lon = document.querySelector('.lon');
+  let rad = document.querySelector('.rad');
+  let circle = undefined;
   let popupNote = document.querySelector('.popupNote')
   let user =$('#user').data().country
   let coords = user.split(',');
   console.log(coords[0]);
   console.log(coords[1]);
 
-  var addCircle = function (event) {
+  let addCircle = function (event) {
     circle = L.circle(event.latlng, {
     color: 'red',
     fillColor: '#f03',
@@ -100,8 +97,12 @@
     }).addTo(mymap);
     circle.bindPopup(popupNote.value);
   }
-  var mymap = L.map('countryMap').setView([coords[0],coords[1]], 0);
-  var layer = new L.StamenTileLayer("toner").addTo(mymap);
+  let mymap = L.map('countryMap', {
+      minZoom: 1,
+      maxBounds: bounds,
+      maxBoundsViscosity: 2.0
+  }).setView([coords[0],coords[1]], 0);
+  let layer = new L.StamenTileLayer("toner").addTo(mymap);
   function onMapClick(event) {
     lat.innerHTML = event.latlng.lat;
     lon.innerHTML = event.latlng.lng;
