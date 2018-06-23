@@ -1,5 +1,5 @@
 require "rails_helper"
-RSpec.describe "Home", :type => :system do
+RSpec.describe "Country", :type => :system do
   let(:valid_user) {
     User.create(name: "test", email: "test@test.com", password: "testing")
   }
@@ -17,23 +17,23 @@ RSpec.describe "Home", :type => :system do
     fill_in 'Email', with: user.email
     fill_in 'Password', with: 'testing'
     click_button('Log in')
+    visit '/users/1/countries/1'
   end
 
-  it "redirects to sign_in when not logged in", js: true do
-    visit '/'
-    expect(page).to have_text 'Log in'
-  end
-  it "shows the homepage when logged in", js: true do
+  it "shows the country when logged in", js: true do
     login_as(valid_user)
-    visit '/'
+    expect(page).to have_text 'Add a visited region on map click!'
+    save_screenshot()
+  end
+
+  it "shows the home page when clicking home", js: true do
+    login_as(valid_user)
+    find(".home-link a").click
     expect(page).to have_text 'EXPLORE, MORE'
   end
-  it "shows the country page when clicking on leaflet popup", js: true do
+  it "shows the Login page when clicking logout", js: true do
     login_as(valid_user)
-    page.execute_script('window.scrollTo(0,100000)')
-    find(".leaflet-interactive", match: :first).click
-    find(".leaflet-popup-content a", match: :first).click
-    expect(page).to have_text 'Add a visited region on map click!'
+    find(".logout-link a").click
+    expect(page).to have_text 'Log in'
   end
-
 end

@@ -4,12 +4,12 @@
     <h1 class="site-name"><em>Discovery</em></h1>
     <nav>
       <ul class="nav-links">
-        <li><%= link_to "Home", root_path %></li>
+        <li class="home-link"><%= link_to "Home", root_path %></li>
         <% if current_user %>
-           <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+           <li class="logout-link"><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
          <% else %>
-           <li><%= link_to "Register", new_user_registration_path %></li>
-           <li><%= link_to "Login", new_user_session_path %></li>
+           <li class="register-link"><%= link_to "Register", new_user_registration_path %></li>
+           <li class="login-link"><%= link_to "Login", new_user_session_path %></li>
         <% end %>
       </ul>
     </nav>

@@ -37,7 +37,8 @@
     style: myStyle
   }).addTo(mymap);
 
-  $(".cntrys-btn").click(function() {
+  $(".cntrys-btn").click(function(event) {
+    event.preventDefault()
     let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     var item = $(this.parentNode);
     console.log(item.data().countryID);
