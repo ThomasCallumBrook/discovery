@@ -112,11 +112,15 @@
     alert("Added visited region");
   }
   function addBlog(blog){
-    $('#prev-blogs').prepend(`<div class="blog">
-      <h3>${blog.title}</h3>
-      <p> <%=DateTime.now.strftime("%d %B %Y (%H:%M GMT):")%> </p>
-      <p>${blog.post}<p>
-    </div>`)
+    if (blog.title && blog.post){
+      $('#prev-blogs').prepend(`<div class="blog">
+        <h3>${blog.title}</h3>
+        <p> <%=DateTime.now.strftime("%d %B %Y (%H:%M GMT):")%> </p>
+        <p>${blog.post}<p>
+      </div>`)
+    }else {
+      alert("Blog must have title and content!")
+    }
   }
   function fetchBlog(uri,blog){
     let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
