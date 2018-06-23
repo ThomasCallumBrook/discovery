@@ -9,6 +9,7 @@
   color: #fff;
   padding: 5px;
   border-radius: 10px;
+  overflow: hidden;
   h2{
     font-size: 1.75rem;
     margin-left: 20px;
@@ -45,4 +46,9 @@
       }
     }
   }
+}
+#prev-blogs {
+  height: 40vh;
+  overflow: auto;
+  margin-right: -20px;
 }

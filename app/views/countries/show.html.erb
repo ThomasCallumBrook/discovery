@@ -35,13 +35,15 @@
     </div>
 
     <h2>Previous Blog Posts From <%=@country.name%>:</h2>
-  <% @blogs.each do |blog| %>
-    <div class="blog">
-      <h3><%=blog.title%></h3>
-      <p> <%= blog.created_at.strftime("%d %B %Y:") %> </p>
-      <p><%=blog.post%><p>
-    </div>
-  <%end%>
+    <div id="prev-blogs">
+    <% @blogs.each do |blog| %>
+      <div class="blog">
+        <h3><%=blog.title%></h3>
+        <p> <%= blog.created_at.strftime("%d %B %Y (%H:%M GMT):") %> </p>
+        <p><%=blog.post%><p>
+      </div>
+    <%end%>
+  </div>
 </div>
 
   <div id="gallery">
@@ -80,7 +82,6 @@
   let lat = document.querySelector('.lat');
   let lon = document.querySelector('.lon');
   let rad = document.querySelector('.rad');
-  let circle = undefined;
   let popupNote = document.querySelector('.popupNote')
   let user =$('#user').data().bounds
   let coords = user.split(',');
@@ -88,11 +89,11 @@
   console.log(coords[1]);
 
   let addCircle = function (event) {
-    circle = L.circle(event.latlng, {
+    let circle = L.circle(event.latlng, {
     color: 'red',
     fillColor: '#f03',
     fillOpacity: 0.5,
-    radius: rad.value*1609.34,
+    radius: rad.value*1000,
     stroke: false
     }).addTo(mymap);
     circle.bindPopup(popupNote.value);
@@ -110,15 +111,15 @@
     addCircle(event);
     alert("Added visited region");
   }
-  function saveBlog(event){
+  function addBlog(blog){
+    $('#prev-blogs').prepend(`<div class="blog">
+      <h3>${blog.title}</h3>
+      <p> <%=DateTime.now.strftime("%d %B %Y (%H:%M GMT):")%> </p>
+      <p>${blog.post}<p>
+    </div>`)
+  }
+  function fetchBlog(uri,blog){
     let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    let data = $('#user').data()
-    let uri = "<%=request.fullpath%>"
-    let blog = {
-      title: document.querySelector('.blog-title').value,
-      post: document.querySelector('.blog-content').value,
-      country: data.country
-    }
     fetch(`${uri}/blogs.json`, {
       method: 'POST',
       credentials: 'include',
@@ -128,7 +129,18 @@
       },
       body: JSON.stringify(blog)
     })
+  }
 
+  function saveBlog(event){
+    let data = $('#user').data()
+    let uri = "<%=request.fullpath%>"
+    let blog = {
+      title: document.querySelector('.blog-title').value,
+      post: document.querySelector('.blog-content').value,
+      country: data.country
+    }
+    fetchBlog(uri, blog);
+    addBlog(blog);
   }
   mymap.addEventListener('click', onMapClick);
   let faSave = document.querySelector('i');
