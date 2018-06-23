@@ -8,7 +8,7 @@ class CountriesController < ApplicationController
 
   # GET users/1/countries/1
   def show
-    @blogs = @country.blogs
+    @blogs = @country.blogs.order('created_at DESC')
   end
 
   # GET users/1/countries/new

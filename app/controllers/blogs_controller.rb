@@ -25,7 +25,6 @@ class BlogsController < ApplicationController
     @blog = @country.blogs.build(blog_params)
 
     if @blog.save
-      redirect_to([@blog.country, @blog], notice: 'Blog was successfully created.')
     else
       render action: 'new'
     end

@@ -1,5 +1,5 @@
 <div id="countryView">
-  <div id="user" data-country=<%=@country.bounds%>></div>
+  <div id="user" data-bounds="<%=@country.bounds%>" data-country="<%=@country%>"></div>
 
   <div class="mapStuff">
     <p id="notice"><%= notice %></p>
@@ -22,14 +22,15 @@
   <div id="countryMap"></div>
   <div class="blogs">
     <h2>New Blog Post For <%=@country.name%>:</h2>
+    <p id="notice"><%= notice %></p>
     <div class="deet-field blog">
       <label>Blog Title:</label>
-      <input type=text class="rad">
+      <input type=text class="blog-title">
 
     </div>
     <div class="deet-field blog">
       <label>Blog Post:</label>
-      <textarea></textarea>
+      <textarea class="blog-content"></textarea>
       <p class="save"><i class="far fa-save"></i></p>
     </div>
 
@@ -81,7 +82,7 @@
   let rad = document.querySelector('.rad');
   let circle = undefined;
   let popupNote = document.querySelector('.popupNote')
-  let user =$('#user').data().country
+  let user =$('#user').data().bounds
   let coords = user.split(',');
   console.log(coords[0]);
   console.log(coords[1]);
@@ -109,7 +110,27 @@
     addCircle(event);
     alert("Added visited region");
   }
+  function saveBlog(event){
+    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    let data = $('#user').data()
+    let uri = "<%=request.fullpath%>"
+    let blog = {
+      title: document.querySelector('.blog-title').value,
+      post: document.querySelector('.blog-content').value,
+      country: data.country
+    }
+    fetch(`${uri}/blogs.json`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': token,
+      },
+      body: JSON.stringify(blog)
+    })
 
+  }
   mymap.addEventListener('click', onMapClick);
-  console.log(user)
+  let faSave = document.querySelector('i');
+  faSave.addEventListener('click', saveBlog);
 </script>
