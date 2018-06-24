@@ -1,7 +1,9 @@
 <div id="countryView">
   <div id="ruby"
     data-country="<%=@country%>"
+    data-time="<%=DateTime.now.strftime("%d %B %Y (%H:%M GMT):")%>"
     data-boundaries="<%=@country.boundaries.to_json  %>">
+
   </div>
 
   <div class="mapStuff">
@@ -118,7 +120,7 @@
     if (blog.title && blog.post){
       $('#prev-blogs').prepend(`<div class="blog">
         <h3>${blog.title}</h3>
-        <p> <%=DateTime.now.strftime("%d %B %Y (%H:%M GMT):")%> </p>
+        <p> ${$('#ruby').data().time} </p>
         <p>${blog.post}<p>
       </div>`)
     }else {

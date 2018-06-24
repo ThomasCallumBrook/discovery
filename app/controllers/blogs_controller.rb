@@ -23,6 +23,11 @@ class BlogsController < ApplicationController
   # POST countries/1/blogs
   def create
     @blog = @country.blogs.build(blog_params)
+    if @blog.save
+      redirect_to([@country.user, @country], notice: 'Blog was successfully posted.')
+    else
+      redirect_to([@country.user, @country], notice: 'Blog post failed')
+    end
   end
 
   # PUT countries/1/blogs/1
