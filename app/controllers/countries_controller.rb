@@ -44,7 +44,6 @@ class CountriesController < ApplicationController
   def destroy
     @country.destroy
 
-    redirect_to user_countries_url(@user)
   end
 
   private

@@ -18,6 +18,20 @@
 
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <script>
+
+  function idFetch(item){
+    fetch(`/users/${item.data().user}/countries.json`)
+    .then(response => response.json())
+    .then(json => {
+      item.data("countryID", json.id)
+      console.log(`${json.id}${json.name}`)
+      countryLayers.resetStyle(countryLayers);
+      item.data("countryLayer").setStyle({
+        color: "#666",
+        fillOpacity: 1,
+      }).bindPopup(`<a href="/users/${item.data().user}/countries/${item.data().countryID}">${item.data().countryName}</a>`);
+    });
+  }
   var bounds = new L.LatLngBounds(new L.LatLng(90, -180), new L.LatLng(-80, 180));
   var mymap = L.map('home-map', {
     scrollWheelZoom: false,
@@ -41,7 +55,6 @@
     event.preventDefault()
     let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     var item = $(this.parentNode);
-    console.log(item.data().countryID);
     if (item.parent().attr('id') === 'visited') {
       this.innerHTML = "+";
       $('#not-visited').append(item);
@@ -88,20 +101,9 @@
           'X-CSRF-Token': token,
         },
         body: JSON.stringify(data)
-      }).then(
-        fetch(`/users/${item.data().user}/countries.json`)
-        .then(response => response.json())
-        .then(json => item.data("countryID", json.id))
-        .then(finish => {
-          console.log(item.data().countryID);
-          countryLayers.resetStyle(countryLayers);
-          item.data("countryLayer").setStyle({
-            color: "#666",
-            fillOpacity: 1,
-          }).bindPopup(`<a href="/users/${item.data().user}/countries/${item.data().countryID}">${item.data().countryName}</a>`);
-        })
-      );
-
+      }).then(timeout => {
+        setTimeout(idFetch(item), 1000)
+      });
     }
   });
 
@@ -114,23 +116,19 @@
       <div class="cntrys">
         <p class="title">${props.name}</p>
       </div>`);
-    console.log("pass");
     item.data("countryLayer", layer);
     item.data("countryName", props.name);
     item.data("user", user);
     let  id = false;
     for(let i = 0; i < countries.length; i++) {
-      console.log(countries[i].name);
       if(countries[i].name === props.name){
         id = countries[i].id;
-        console.log(countries[i].id)
         break
       }
     }
     if (id || id === 0){
       item.data("countryID", id);
       let url = `<a href="/users/${item.data().user}/countries/${item.data().countryID}">${props.name}</a>`;
-      console.log(url);
       item.append(`<p class="cntrys-btn">&times</p>`)
       $('#visited').append($(item));
       item.data("countryLayer").setStyle({

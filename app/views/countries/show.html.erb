@@ -85,8 +85,6 @@
   let popupNote = document.querySelector('.popupNote')
   let user =$('#user').data().bounds
   let coords = user.split(',');
-  console.log(coords[0]);
-  console.log(coords[1]);
 
   let addCircle = function (event) {
     let circle = L.circle(event.latlng, {
@@ -135,7 +133,7 @@
     })
   }
 
-  function saveBlog(event){
+  function saveBlog(){
     let data = $('#user').data()
     let uri = "<%=request.fullpath%>"
     let blog = {
