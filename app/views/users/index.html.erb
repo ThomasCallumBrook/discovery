@@ -24,7 +24,6 @@
     .then(response => response.json())
     .then(json => {
       item.data("countryID", json.id)
-      console.log(`${json.id}${json.name}`)
       countryLayers.resetStyle(countryLayers);
       item.data("countryLayer").setStyle({
         color: "#666",
