@@ -36,7 +36,7 @@ class CountriesController < ApplicationController
     if @country.update_attributes(country_params)
       redirect_to([@country.user, @country], notice: 'Country was successfully updated.')
     else
-      render action: 'edit'
+      redirect_to([@country.user, @country], notice: 'Unsupported image type! Please choose from: jpg, jpeg, gif, or png')
     end
   end
 
