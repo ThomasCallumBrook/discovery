@@ -58,7 +58,7 @@ class CountriesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def country_params
-      params.require(:country).permit(:name, :bounds, {images: []})
+      params.require(:country).permit({images: []}, {boundaries: {}}, :name, :zoom, centre: [])
     end
 
 

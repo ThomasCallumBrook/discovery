@@ -31,11 +31,11 @@
       }).bindPopup(`<a href="/users/${item.data().user}/countries/${item.data().countryID}">${item.data().countryName}</a>`);
     });
   }
-  var bounds = new L.LatLngBounds(new L.LatLng(90, -180), new L.LatLng(-80, 180));
-  var mymap = L.map('home-map', {
+  var indexBounds = new L.LatLngBounds(new L.LatLng(90, -180), new L.LatLng(-80, 180));
+  var indexMap = L.map('home-map', {
     scrollWheelZoom: false,
     minZoom: 1,
-    maxBounds: bounds,
+    maxBounds: indexBounds,
     maxBoundsViscosity: 1.0
   }).setView([0, 0], 1);
 
@@ -48,7 +48,7 @@
   var countryLayers = L.geoJson(world, {
     onEachFeature: countryAssignment,
     style: myStyle
-  }).addTo(mymap);
+  }).addTo(indexMap);
 
   $(".cntrys-btn").click(function(event) {
     event.preventDefault()
@@ -72,25 +72,16 @@
     }else{
       this.innerHTML = "&times";
       $('#visited').append(item);
-      let neLat = item.data().countryLayer._bounds._northEast.lat;
-      let swLat = item.data().countryLayer._bounds._southWest.lat;
-      let neLon = item.data().countryLayer._bounds._northEast.lng;
-      let swLon = item.data().countryLayer._bounds._southWest.lng;
-      let lat = (neLat + swLat) / 2;
-      let lon = (neLon + swLon) / 2;
-      let deltaLat = Math.sqrt((neLat - swLat) * (neLat - swLat));
-      let deltaLon = Math.sqrt((neLon - swLon) * (neLon - swLon));
-      if (deltaLat > 30 || deltaLon > 60) {
-        mymap.setView([lat, lon], 1);
-      }else if (deltaLat < 0.5 || deltaLon < 0.5){
-        mymap.setView([lat, lon], 10);
-      }else {
-        mymap.setView([lat, lon], 4);
-      }
+      let boundaries = item.data().countryLayer._bounds
+      let bounds = L.latLngBounds(
+        boundaries._northEast,
+        boundaries._southWest
+      );
+      indexMap.fitBounds(bounds);
       let data = {
         name: item.data().countryName,
         user: item.data().user,
-        bounds:`${lat},${lon}`,
+        boundaries: boundaries
       }
       fetch(`/users/${item.data().user}/countries.json`, {
         method: 'POST',

@@ -23,11 +23,6 @@ class BlogsController < ApplicationController
   # POST countries/1/blogs
   def create
     @blog = @country.blogs.build(blog_params)
-
-    if @blog.save
-    else
-      render action: 'new'
-    end
   end
 
   # PUT countries/1/blogs/1

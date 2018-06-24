@@ -3,7 +3,6 @@ class Country < ApplicationRecord
   mount_uploaders :images, ImagesUploader
   belongs_to :user
 
-  validates :bounds, presence: true
   validates :user, presence: true
   validates :name, presence: true
 
