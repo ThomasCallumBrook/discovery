@@ -18,8 +18,8 @@ us = users.map do |user|
 end
 
 countries = [
-  {bounds: '33.902427,67.84322900000001', name: 'Afghanistan', user:us[0]},
-  {bounds: '-11.1843295,17.860000499999998', name: 'Angola', user:us[0]}
+  {name: 'Afghanistan', user:us[0], boundaries: {"_southWest":{"lat":29.318572,"lng":60.52843},"_northEast":{"lat":38.486282,"lng":75.158028}} },
+  {name: 'Angola', user:us[0], boundaries: {"_southWest":{"lat":-17.930636,"lng":11.640096},"_northEast":{"lat":-4.438023,"lng":24.079905}} }
 ]
 
 co = countries.map do |country|
