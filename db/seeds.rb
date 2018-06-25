@@ -26,7 +26,7 @@ co = countries.map do |country|
   Country.create!(country)
 end
 blogs = [
-  {title: 'Hello London', post: 'I went to London, it was the tits', country:co[0]},
+  {title: 'Hello London', post: 'I went to London, it was amazing', country:co[0]},
   {title: 'Aberdeen!', post: 'The visit to Aberdeenshire, was enjoyable. The city was impressive', country:co[0]},
 ]
 

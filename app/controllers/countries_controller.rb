@@ -26,12 +26,10 @@ class CountriesController < ApplicationController
 
     if @country.save
       redirect_to([@country.user, @country], notice: 'Country was successfully created.')
-    else
-      render action: 'new'
     end
   end
 
-  # PUT users/1/countries/1
+  # # PUT users/1/countries/1
   def update
     if @country.update_attributes(country_params)
       redirect_to([@country.user, @country], notice: 'Country was successfully updated.')
@@ -58,7 +56,7 @@ class CountriesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def country_params
-      params.require(:country).permit({images: []}, {boundaries: {}}, :name, :zoom, centre: [])
+      params.require(:country).permit({images: []}, {boundaries: {}}, :name)
     end
 
 

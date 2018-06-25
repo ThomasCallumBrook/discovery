@@ -5,5 +5,7 @@ class Country < ApplicationRecord
 
   validates :user, presence: true
   validates :name, presence: true
+  validates :boundaries, presence: true
+
 
 end

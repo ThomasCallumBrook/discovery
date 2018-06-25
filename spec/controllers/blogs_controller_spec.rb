@@ -5,7 +5,7 @@ RSpec.describe BlogsController, type: :controller do
     User.create(name: "test", email: "test@test.com", password: "testing")
   }
   let(:valid_country) {
-    Country.create(name: "test", bounds: "12,14", user: valid_user)
+    Country.create(name: "test", boundaries: {"_southWest":{"lat":29.318572,"lng":60.52843},"_northEast":{"lat":38.486282,"lng":75.158028}}, user: valid_user)
   }
 
   let(:valid_attributes) {
@@ -60,11 +60,6 @@ RSpec.describe BlogsController, type: :controller do
           post :create, params: {:user_id => valid_user.id, :country_id => valid_country.id, blog: valid_attributes}, session: valid_session
         }.to change(Blog, :count).by(1)
       end
-
-      it "redirects to the created blog" do
-        post :create, params: {:user_id => valid_user.id, :country_id => valid_country.id, blog: valid_attributes}, session: valid_session
-        expect(response).to redirect_to("users/#{valid.user.id}/countries/#{valid.country.id}/blogs/#{Blog.last.id}")
-      end
     end
 
     context "with invalid params" do
@@ -75,36 +70,7 @@ RSpec.describe BlogsController, type: :controller do
     end
   end
 
-  describe "PUT #update" do
-    context "with valid params" do
-      let(:new_attributes) {
-        {title: "what",
-        post: "why"}
-      }
 
-      it "updates the requested blog" do
-        blog = Blog.create! valid_attributes
-        put :update, params: {:user_id => valid_user.id, :country_id => valid_country.id, id: blog.to_param, blog: new_attributes}, session: valid_session
-        blog.reload
-        expect(blog.title).to eq("what")
-        expect(blog.post).to eq("why")
-      end
-
-      it "redirects to the blog" do
-        blog = Blog.create! valid_attributes
-        put :update, params: {:user_id => valid_user.id, :country_id => valid_country.id, id: blog.to_param, blog: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(blog)
-      end
-    end
-
-    context "with invalid params" do
-      it "returns a success response (i.e. to display the 'edit' template)" do
-        blog = Blog.create! valid_attributes
-        put :update, params: {:user_id => valid_user.id, :country_id => valid_country.id, id: blog.to_param, blog: invalid_attributes}, session: valid_session
-        expect(response).to be_success
-      end
-    end
-  end
 
   describe "DELETE #destroy" do
     it "destroys the requested blog" do
@@ -112,12 +78,6 @@ RSpec.describe BlogsController, type: :controller do
       expect {
         delete :destroy, params: {:user_id => valid_user.id, :country_id => valid_country.id, id: blog.to_param}, session: valid_session
       }.to change(Blog, :count).by(-1)
-    end
-
-    it "redirects to the blogs list" do
-      blog = Blog.create! valid_attributes
-      delete :destroy, params: {:user_id => valid_user.id, :country_id => valid_country.id, id: blog.to_param}, session: valid_session
-      expect(response).to redirect_to(blogs_url)
     end
   end
 
