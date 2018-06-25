@@ -6,7 +6,7 @@ RSpec.describe CountriesController, type: :controller do
   }
   let(:valid_attributes) {
     {name: "test",
-    bounds: "12,14",
+    boundaries: {"_southWest":{"lat":29.318572,"lng":60.52843},"_northEast":{"lat":38.486282,"lng":75.158028}},
     user: valid_user  }
   }
 
@@ -51,20 +51,8 @@ RSpec.describe CountriesController, type: :controller do
     context "with valid params" do
       it "creates a new Country" do
         expect {
-          post :create, params: {:user_id => valid_user.id, id: country.to_param, country: valid_attributes}, session: valid_session
+          post :create, params: {:user_id => valid_user.id, id: valid_attributes.to_param, country: valid_attributes}, session: valid_session
         }.to change(Country, :count).by(1)
-      end
-
-      it "redirects to the created country" do
-        post :create, params: {:user_id => valid_user.id, id: country.to_param, country: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(Country.last)
-      end
-    end
-
-    context "with invalid params" do
-      it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: {:user_id => valid_user.id, id: country.to_param, country: invalid_attributes}, session: valid_session
-        expect(response).to be_success
       end
     end
   end
@@ -78,7 +66,7 @@ RSpec.describe CountriesController, type: :controller do
 
       it "updates the requested country" do
         country = Country.create! valid_attributes
-        put :update, params: {:user_id => valid_user.id, id: country.to_param, user_country: new_attributes}, session: valid_session
+        put :update, params: {:user_id => valid_user.id, id: country.to_param, country: new_attributes}, session: valid_session
         country.reload
         expect(country.name).to eq("test2")
       end
@@ -94,7 +82,7 @@ RSpec.describe CountriesController, type: :controller do
       it "returns a success response (i.e. to display the 'edit' template)" do
         country = Country.create! valid_attributes
         put :update, params: {:user_id => valid_user.id, id: country.to_param, country: invalid_attributes}, session: valid_session
-        expect(response).to be_success
+        expect(response).to redirect_to("/users/#{valid_user.id}/countries/#{country.id}")
       end
     end
   end
@@ -105,12 +93,6 @@ RSpec.describe CountriesController, type: :controller do
       expect {
         delete :destroy, params: {:user_id => valid_user.id, id: country.to_param}, session: valid_session
       }.to change(Country, :count).by(-1)
-    end
-
-    it "redirects to the countries list" do
-      country = Country.create! valid_attributes
-      delete :destroy, params: {:user_id => valid_user.id, id: country.to_param}, session: valid_session
-      expect(response).to redirect_to("/users/#{valid_user.id}/countries")
     end
   end
 

@@ -25,25 +25,21 @@ class BlogsController < ApplicationController
     @blog = @country.blogs.build(blog_params)
     if @blog.save
       redirect_to([@country.user, @country], notice: 'Blog was successfully posted.')
-    else
-      redirect_to([@country.user, @country], notice: 'Blog post failed')
     end
   end
 
   # PUT countries/1/blogs/1
-  def update
-    if @blog.update_attributes(blog_params)
-      redirect_to([@blog.country, @blog], notice: 'Blog was successfully updated.')
-    else
-      render action: 'edit'
-    end
-  end
+  # def update
+  #   if @blog.update_attributes(blog_params)
+  #     redirect_to([@blog.country, @blog], notice: 'Blog was successfully updated.')
+  #   else
+  #     render action: 'edit'
+  #   end
+  # end
 
   # DELETE countries/1/blogs/1
   def destroy
     @blog.destroy
-
-    redirect_to country_blogs_url(@country)
   end
 
   private
