@@ -1,6 +1,7 @@
 class CountriesController < ApplicationController
   before_action :set_countries
   before_action :set_country, only: [:show, :edit, :update, :destroy]
+  before_action :correct_user, only: [:show, :edit, :update, :destroy]
   # GET users/1/countries
   def index
     @countries = @user.countries
@@ -9,15 +10,6 @@ class CountriesController < ApplicationController
   # GET users/1/countries/1
   def show
     @blogs = @country.blogs.order('created_at DESC')
-  end
-
-  # GET users/1/countries/new
-  def new
-    @country = @user.countries.build
-  end
-
-  # GET users/1/countries/1/edit
-  def edit
   end
 
   # POST users/1/countries
@@ -59,5 +51,9 @@ class CountriesController < ApplicationController
       params.require(:country).permit({images: []}, {boundaries: {}}, :name)
     end
 
+    #Prevent anyone but the correct user from altering/viewing countries
+    def correct_user
+      redirect_to root_url if current_user.id != @user.id
+    end
 
 end

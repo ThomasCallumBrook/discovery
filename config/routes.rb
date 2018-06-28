@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :users, only: [:index] do
-    resources :countries do
+    resources :countries, except: [:new, :edit] do
       resources :blogs
     end
   end
