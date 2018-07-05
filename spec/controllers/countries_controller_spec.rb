@@ -32,21 +32,6 @@ RSpec.describe CountriesController, type: :controller do
     end
   end
 
-  describe "GET #new" do
-    it "returns a success response" do
-      get :new, params: {:user_id => valid_user.id}, session: valid_session
-      expect(response).to be_success
-    end
-  end
-
-  describe "GET #edit" do
-    it "returns a success response" do
-      country = Country.create! valid_attributes
-      get :edit, params: {:user_id => valid_user.id, id: country.to_param}, session: valid_session
-      expect(response).to be_success
-    end
-  end
-
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Country" do
@@ -61,7 +46,7 @@ RSpec.describe CountriesController, type: :controller do
     context "with valid params" do
       let(:new_attributes) {
         {name: "test2",
-        bounds: "12,15"}
+        boundaries: {"_southWest":{"lat":30,"lng":60},"_northEast":{"lat":38.5,"lng":75.2}}
       }
 
       it "updates the requested country" do
@@ -69,6 +54,7 @@ RSpec.describe CountriesController, type: :controller do
         put :update, params: {:user_id => valid_user.id, id: country.to_param, country: new_attributes}, session: valid_session
         country.reload
         expect(country.name).to eq("test2")
+        expect(country.boundaries._southWest.lat).to eq(30)
       end
 
       it "redirects to the country" do

@@ -51,7 +51,7 @@ class CountriesController < ApplicationController
       params.require(:country).permit({images: []}, {boundaries: {}}, :name)
     end
 
-    #Prevent anyone but the correct user from altering/viewing countries
+    # Prevent anyone but the correct user from altering/viewing countries
     def correct_user
       redirect_to root_url if current_user.id != @user.id
     end
