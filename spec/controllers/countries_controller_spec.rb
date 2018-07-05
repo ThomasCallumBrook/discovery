@@ -14,7 +14,13 @@ RSpec.describe CountriesController, type: :controller do
     {name: ""}
   }
 
-  let(:valid_session) { {} }
+
+  def valid_session
+    controller.stub(:correct_user).and_return(true)
+  end
+  before do
+    valid_session
+  end
 
   describe "GET #index" do
     it "returns a success response" do
@@ -45,8 +51,7 @@ RSpec.describe CountriesController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        {name: "test2",
-        boundaries: {"_southWest":{"lat":30,"lng":60},"_northEast":{"lat":38.5,"lng":75.2}}
+        {name: "test2"}
       }
 
       it "updates the requested country" do
@@ -54,7 +59,6 @@ RSpec.describe CountriesController, type: :controller do
         put :update, params: {:user_id => valid_user.id, id: country.to_param, country: new_attributes}, session: valid_session
         country.reload
         expect(country.name).to eq("test2")
-        expect(country.boundaries._southWest.lat).to eq(30)
       end
 
       it "redirects to the country" do
@@ -68,6 +72,7 @@ RSpec.describe CountriesController, type: :controller do
       it "returns a success response (i.e. to display the 'edit' template)" do
         country = Country.create! valid_attributes
         put :update, params: {:user_id => valid_user.id, id: country.to_param, country: invalid_attributes}, session: valid_session
+        expect(controller).to set_flash.now[:notice]
         expect(response).to redirect_to("/users/#{valid_user.id}/countries/#{country.id}")
       end
     end
