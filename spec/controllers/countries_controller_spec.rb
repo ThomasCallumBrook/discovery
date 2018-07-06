@@ -14,7 +14,13 @@ RSpec.describe CountriesController, type: :controller do
     {name: ""}
   }
 
-  let(:valid_session) { {} }
+
+  def valid_session
+    controller.stub(:correct_user).and_return(true)
+  end
+  before do
+    valid_session
+  end
 
   describe "GET #index" do
     it "returns a success response" do
@@ -32,21 +38,6 @@ RSpec.describe CountriesController, type: :controller do
     end
   end
 
-  describe "GET #new" do
-    it "returns a success response" do
-      get :new, params: {:user_id => valid_user.id}, session: valid_session
-      expect(response).to be_success
-    end
-  end
-
-  describe "GET #edit" do
-    it "returns a success response" do
-      country = Country.create! valid_attributes
-      get :edit, params: {:user_id => valid_user.id, id: country.to_param}, session: valid_session
-      expect(response).to be_success
-    end
-  end
-
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Country" do
@@ -60,8 +51,7 @@ RSpec.describe CountriesController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        {name: "test2",
-        bounds: "12,15"}
+        {name: "test2"}
       }
 
       it "updates the requested country" do
@@ -74,6 +64,7 @@ RSpec.describe CountriesController, type: :controller do
       it "redirects to the country" do
         country = Country.create! valid_attributes
         put :update, params: {:user_id => valid_user.id, id: country.to_param, country: valid_attributes}, session: valid_session
+        expect(controller).to set_flash[:notice]
         expect(response).to redirect_to("/users/#{valid_user.id}/countries/#{country.id}")
       end
     end
@@ -82,6 +73,7 @@ RSpec.describe CountriesController, type: :controller do
       it "returns a success response (i.e. to display the 'edit' template)" do
         country = Country.create! valid_attributes
         put :update, params: {:user_id => valid_user.id, id: country.to_param, country: invalid_attributes}, session: valid_session
+        expect(controller).to set_flash[:alert]
         expect(response).to redirect_to("/users/#{valid_user.id}/countries/#{country.id}")
       end
     end

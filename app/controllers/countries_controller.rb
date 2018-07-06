@@ -26,7 +26,7 @@ class CountriesController < ApplicationController
     if @country.update_attributes(country_params)
       redirect_to([@country.user, @country], notice: 'Country was successfully updated.')
     else
-      redirect_to([@country.user, @country], notice: 'Unsupported image type! Please choose from: jpg, jpeg, gif, or png')
+      redirect_to([@country.user, @country], alert: 'Unsupported image type! Please choose from: jpg, jpeg, gif, or png')
     end
   end
 
@@ -51,7 +51,7 @@ class CountriesController < ApplicationController
       params.require(:country).permit({images: []}, {boundaries: {}}, :name)
     end
 
-    #Prevent anyone but the correct user from altering/viewing countries
+    # Prevent anyone but the correct user from altering/viewing countries
     def correct_user
       redirect_to root_url if current_user.id != @user.id
     end
