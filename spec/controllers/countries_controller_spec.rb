@@ -64,6 +64,7 @@ RSpec.describe CountriesController, type: :controller do
       it "redirects to the country" do
         country = Country.create! valid_attributes
         put :update, params: {:user_id => valid_user.id, id: country.to_param, country: valid_attributes}, session: valid_session
+        expect(controller).to set_flash[:notice]
         expect(response).to redirect_to("/users/#{valid_user.id}/countries/#{country.id}")
       end
     end
@@ -72,7 +73,7 @@ RSpec.describe CountriesController, type: :controller do
       it "returns a success response (i.e. to display the 'edit' template)" do
         country = Country.create! valid_attributes
         put :update, params: {:user_id => valid_user.id, id: country.to_param, country: invalid_attributes}, session: valid_session
-        expect(controller).to set_flash.now[:notice]
+        expect(controller).to set_flash[:alert]
         expect(response).to redirect_to("/users/#{valid_user.id}/countries/#{country.id}")
       end
     end
