@@ -11,5 +11,6 @@
 // about supported directives.
 //
 //= require rails-ujs
-//= require_tree .
-//= require sinon
+//= require leaflet
+//= require tile.stamen
+//= require countries.geo
