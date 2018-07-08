@@ -12,9 +12,19 @@
 </div>
 <div id="discovery">
   <div id="explored"><h1 class="explored-t">Explored</h1><div id="visited"></div></div>
-  <div id="map"> <h1 class="map-t">Your World to Discover</h1><div id="home-map"></div></div>
+  <div id="map">
+    <h1 class="map-t">Your World to Discover</h1>
+    <div id="search">
+      <div class="search-field">
+        <input type=text id="filterText" placeholder="Search for a country">
+        <button id="filter">Filter</button>
+      </div>
+    </div>
+    <div id="home-map"></div></div>
   <div id="explore"><h1 class="unexplored-t">Unexplored</h1><div id="not-visited"></div></div>
 </div>
+
+
 
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <%= javascript_include_tag "index-page" %>
