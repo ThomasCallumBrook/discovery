@@ -120,13 +120,24 @@
     }
   }
 }
-
+.hide {
+  display: none;
+}
+.search-field {
+  color: #fff;
+  width: 75%;
+  margin: 5px auto;
+  text-align: center;
+}
+#filterText {
+  width: 200px;
+}
 
 @media only screen and (max-width: 950px) {
   #discovery {
     height: auto;
     grid-template-columns: auto;
-    grid-template-rows: 1fr 567px 1fr;
+    grid-template-rows: 250px 595px 250px;
     grid-template-areas:
     "explored" "map" "unexplored";
     #home-map{
@@ -134,9 +145,11 @@
     }
     #not-visited{
       text-align: left;
+      height:150px;
     }
     #visited{
       text-align: left;
+      height:150px;
       .cntrys {
         .cntrys-btn {
           grid-area: btn;

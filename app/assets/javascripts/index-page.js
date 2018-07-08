@@ -111,4 +111,15 @@ document.addEventListener("DOMContentLoaded", function() {
       $('#not-visited').append(item);
     }
   }
+
+  $("#filter").click(function(event){
+    let countries = document.querySelectorAll(".cntrys");
+    let search = document.querySelector("#filterText").value.toUpperCase()
+    countries.forEach(function(country){
+      $(country).removeClass("hide");
+      if (!$(country).data("countryName").toUpperCase().includes(search) && search) {
+        $(country).addClass("hide");
+      }
+    });
+  });
 });
